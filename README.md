@@ -1,8 +1,6 @@
 # react-classname-prefix-loader
 A Webpack loader that prefixes classes with custom prefix in React components
 
-[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
-
 MyComponent.js
 
 ```jsx
@@ -38,14 +36,14 @@ $ npm install react-classname-prefix-loader --save-dev
 
 ```javascript
 module: {
-		loaders: [
-			{
-				test: /\.js$/,
-				exclude: /node_modules/,
-				loaders: ['react-hot', 'babel-loader', 'react-classname-prefix-loader?prefix=your_prefix'],
-			},
-		],
-	},
+ loaders: [
+  {
+    test: /\.js$/,
+    exclude: /node_modules/,
+    loaders: ['react-hot', 'babel-loader', 'react-classname-prefix-loader?prefix=your_prefix'],
+  },
+ ],
+},
 ```
 
 ## Recommendation
