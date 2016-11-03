@@ -1,8 +1,6 @@
 # react-classname-prefix-loader
 A Webpack loader that prefixes classes with custom prefix in React components
 
-[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
-
 MyComponent.js
 
 ```jsx
