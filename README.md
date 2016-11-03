@@ -36,14 +36,14 @@ $ npm install react-classname-prefix-loader --save-dev
 
 ```javascript
 module: {
-		loaders: [
-			{
-				test: /\.js$/,
-				exclude: /node_modules/,
-				loaders: ['react-hot', 'babel-loader', 'react-classname-prefix-loader?prefix=your_prefix'],
-			},
-		],
-	},
+ loaders: [
+  {
+    test: /\.js$/,
+    exclude: /node_modules/,
+    loaders: ['react-hot', 'babel-loader', 'react-classname-prefix-loader?prefix=your_prefix'],
+  },
+ ],
+},
 ```
 
 ## Recommendation
