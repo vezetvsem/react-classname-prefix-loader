@@ -1,4 +1,4 @@
-const classNameRegex = /className=\"([a-zA-Z\-\_\s]*)\"/g
+const classNameRegex = /className=\"([a-zA-Z\-\_\s]*)\"/ig;
 const classNamesRegex = /classnames\(((.|\s)*?)\)/img;
 const stringBetweenQuotesRegex = /(["'])(\\?.)*?\1/img;
 
@@ -28,6 +28,13 @@ function loader(source, inputSourceMap) {
         }
 
         source = source.replace(classNameRegex, (text, classNames) => {
+            let attr = text.match(/classname/ig);
+            if (attr && attr[0]) {
+                attr = attr[0];
+            } else {
+                attr = 'className';
+            }
+
             let prefixedClassNames = classNames
             .split(' ')
             .map((className) => {
@@ -36,7 +43,7 @@ function loader(source, inputSourceMap) {
             })
             .join(' ');
 
-            return `className='${prefixedClassNames}'`;
+            return `${attr}='${prefixedClassNames}'`;
         });
     }
 
