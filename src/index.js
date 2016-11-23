@@ -1,6 +1,7 @@
 const classNameRegex = /className=\"([a-zA-Z\-\_\s]*)\"/ig;
 const classNamesRegex = /classnames\(((.|\s)*?)\)/img;
 const stringBetweenQuotesRegex = /(["'])(\\?.)*?\1/img;
+let ignore = [];
 
 function loader(source, inputSourceMap) {
     let prefix = getQueryParameterByName('prefix', this.query);
@@ -19,8 +20,10 @@ function loader(source, inputSourceMap) {
                     classNamesMatchesStrings.map(item => {
                         item = item.replace(/['"]/g, '');
 
-                        source = source.replace(item, text => {
-                            return prefix + '-' + text;
+                        source = source.replace(new RegExp(item, 'g'), text => {
+                            const replaceResult = prefix + '-' + text;
+                            ignore.push(replaceResult);
+                            return replaceResult;
                         });
                     });
                 }
@@ -38,7 +41,10 @@ function loader(source, inputSourceMap) {
             let prefixedClassNames = classNames
             .split(' ')
             .map((className) => {
-                if (ignoreClassName(className, this.options.reactPrefixLoader)) return className;
+                if (ignoreClassName(className)) {
+                    return className;
+                }
+
                 return `${prefix}-${className}`;
             })
             .join(' ');
@@ -52,7 +58,9 @@ function loader(source, inputSourceMap) {
 
 function ignoreClassName(className, options = {}) {
     return classMatchesTest(className, options.ignore) ||
-        className.trim().length === 0 || /^[A-Z-]/.test(className)
+        className.trim().length === 0 ||
+        /^[A-Z-]/.test(className) ||
+        ignore.findIndex(item => className === item) >= 0;
 }
 
 function classMatchesTest(className, ignore) {
