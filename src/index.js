@@ -18,10 +18,8 @@ function loader(source, inputSourceMap) {
 
                 if (classNamesMatchesStrings) {
                     classNamesMatchesStrings.map(item => {
-                        item = item.replace(/['"]/g, '');
-
                         source = source.replace(new RegExp(item, 'g'), text => {
-                            const replaceResult = prefix + '-' + text;
+                            const replaceResult = "'" + prefix + '-' + text.replace(/['"]/g, '') + "'";
                             ignore.push(replaceResult);
                             return replaceResult;
                         });
